@@ -1,5 +1,9 @@
 # School Bus Learning Adventure — Project Reference
 
+## Workflow
+
+Before committing any change, update this file (`AGENTS.md`) if the change affects anything it describes — commands, architecture, a standing design decision, or deployment. Keeping it current here is what keeps `CLAUDE.md` (which just imports this file) accurate too.
+
 ## Purpose and stack
 
 A cheerful browser learning game for the owner's 6-year-old granddaughter. Plain HTML, CSS, and JavaScript only — no framework, build step, backend, accounts, or tracking. Open `index.html` directly to play, or serve the folder statically.
