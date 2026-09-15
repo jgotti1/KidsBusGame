@@ -40,7 +40,7 @@ Top-level mutable state: `correct`, `wrong`, `current` (active question), `deck`
 
 Core lifecycle: `ask()` pops the next question from `deck`, renders shuffled choice buttons, opens the `<dialog id="question">`, and calls `read()`. `answer(choice, button)` scores the pick, disables the choices, and always auto-advances — there is no manual "continue" button in the question dialog (see **Narration and pacing**). `goToNext(good)` (called only by the auto-advance timer, with the answer's correctness passed in directly) closes the dialog and routes to `driveToNextStop()` (or the boarding animation before it) when `good`, or back into `ask()` for a retry when not.
 
-Trip progression: `driveToNextStop()` handles both the next-pickup and school-arrival cases; `unloadChildren(atSchool)` pops passengers one at a time into full-body SVG characters via `makeOutsideChild()`; `showOutsideReaction(atSchool)` drives the bus away and runs the win/loss group animation before calling `finish()`. `returnChildrenHome()` is the loss-path entry point (bus drives home, doors open, `unloadChildren(false)`).
+Trip progression: `driveToNextStop()` handles both the next-pickup and school-arrival cases; `unloadChildren(atSchool)` pops passengers one at a time into full-body SVG characters via `makeOutsideChild()`; `showOutsideReaction(atSchool)` drives the bus away (`.departing`, then `.bus-departed`) and runs the win/loss group animation before calling `finish()`. On a win, it fills `#scene-confetti` (via the shared `confettiMarkup()` helper, also used by the ending dialog's `#confetti`) as soon as the bus has pulled away. On a loss, the waiting parents (`.family-pair .parent-figure`, added earlier by `unloadChildren`) are visible and arm-waving starting from `.departing` — i.e. while the bus is still pulling away, not only after — via CSS, not JS. `returnChildrenHome()` is the loss-path entry point (bus drives home, doors open, `unloadChildren(false)`).
 
 `prepareFamilies()` builds ten distinct child faces per trip across five skin tones, mapping each to a consistent parent face, hair color, curls, and glasses in `familyProfiles`, so a child's identity (and their waiting/reunited parent) stays consistent through boarding and unloading.
 
@@ -71,6 +71,8 @@ These came from explicit product direction and should not be silently reverted:
 - Exterior side-view yellow bus with a visible front hood, wide folding door (16% of bus width), and two smaller, lower road wheels (`width: clamp(44px, 12%, 110px)`, `bottom: -12%`) that don't cover the passenger windows.
 - The lower passenger windows must show the **same faces and skin tones as the children who actually boarded**, not generic icons; unloaded children reuse those exact skin tones/hair styles as full-body SVG characters.
 - Welcome-screen credit: "Created by MargottiCode @margotticode.com", linking to `https://margotticode.com` in a new tab with `rel="noopener noreferrer"`.
+- Winning celebration: confetti falls in the ride scene itself (`#scene-confetti`) once the bus has pulled away, in addition to the ending dialog's own confetti.
+- Losing reaction: the waiting parents wave their arms starting as the bus pulls away (`.departing`), not only once it's gone (`.bus-departed`/`.disappointed`).
 
 ## Deployment
 

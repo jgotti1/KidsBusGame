@@ -583,7 +583,8 @@ dialog h2 {
   line-height: 1.7;
   margin-bottom: 25px;
 }
-#confetti i {
+#confetti i,
+.scene-confetti i {
   position: absolute;
   top: -20px;
   left: var(--x);
@@ -592,6 +593,13 @@ dialog h2 {
   background: var(--color);
   animation: fall 3s var(--delay) infinite;
   pointer-events: none;
+}
+.scene-confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 4;
 }
 @keyframes fall {
   to {
@@ -1274,20 +1282,22 @@ dialog h2 {
   width: clamp(31px, 5.4vw, 62px);
   visibility: hidden;
 }
+.departing .family-pair .parent-figure,
 .bus-departed .family-pair .parent-figure {
   visibility: visible;
 }
+.departing .parent-figure .child-arms,
 .disappointed .parent-figure .child-arms {
   transform-box: fill-box;
   transform-origin: center bottom;
-  animation: parent-arm-raise 0.8s ease-in-out infinite alternate;
+  animation: parent-arm-wave 0.35s ease-in-out infinite alternate;
 }
-@keyframes parent-arm-raise {
+@keyframes parent-arm-wave {
   from {
-    transform: translateY(5px) scaleY(0.7);
+    transform: rotate(-16deg);
   }
   to {
-    transform: translateY(-3px) scaleY(1.1);
+    transform: rotate(16deg);
   }
 }
 .choices button {

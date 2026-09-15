@@ -172,6 +172,13 @@ function answer(choice, button) {
   setTimeout(proceed, 4000);
   speak($("feedback").textContent, { onEnd: proceed });
 }
+function confettiMarkup(count = 24) {
+  return Array.from(
+    { length: count },
+    (_, i) =>
+      `<i style="--x:${Math.random() * 100}%;--delay:${Math.random() * 2}s;--color:${["#ffc842", "#74bcb0", "#f19aa1", "#7cafd7"][i % 4]}"></i>`,
+  ).join("");
+}
 function finish() {
   busAudio.stop();
   const won = correct === 10;
@@ -182,13 +189,7 @@ function finish() {
   $("end-copy").textContent = won
     ? "Ten friends, ten discoveries, and one happy school day. Wonderful work!"
     : `Everyone is safely home. You found ${correct} correct ${correct === 1 ? "answer" : "answers"}! Let’s try again.`;
-  $("confetti").innerHTML = won
-    ? Array.from(
-        { length: 24 },
-        (_, i) =>
-          `<i style="--x:${Math.random() * 100}%;--delay:${Math.random() * 2}s;--color:${["#ffc842", "#74bcb0", "#f19aa1", "#7cafd7"][i % 4]}"></i>`,
-      ).join("")
-    : "";
+  $("confetti").innerHTML = won ? confettiMarkup() : "";
   $("restart").textContent = won ? "Let’s ride again ↻" : "Try again ↻";
   $("ending").showModal();
   speak($("end-title").textContent, {});
@@ -293,6 +294,7 @@ function showOutsideReaction(atSchool) {
       : "Oh man, no school today.";
     $("ride-title").textContent = chant;
     $("outside-kids").classList.add(atSchool ? "cheering" : "disappointed");
+    if (atSchool) $("scene-confetti").innerHTML = confettiMarkup();
     if (correct) speak(chant);
     setTimeout(finish, correct ? 4000 : 700);
   };
@@ -431,6 +433,7 @@ $("restart").onclick = () => {
     "disappointed",
     "family-reunion",
   );
+  $("scene-confetti").replaceChildren();
   $("ride").classList.remove("departing", "bus-departed");
   $("correct").textContent = 0;
   $("wrong").textContent = 0;
