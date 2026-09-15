@@ -8,7 +8,8 @@ let correct = 0,
   locked = false,
   sound = true,
   startingBus = true,
-  passengers = [];
+  passengers = [],
+  autoAdvanceTimer = null;
 const shuffle = (a) => {
   a = [...a];
   for (let i = a.length - 1; i > 0; i--) {
@@ -148,6 +149,8 @@ function answer(choice, button) {
   $("next").dataset.good = String(good);
   $("next").focus();
   route();
+  clearTimeout(autoAdvanceTimer);
+  if (good) autoAdvanceTimer = setTimeout(goToNext, 2500);
 }
 function finish() {
   busAudio.stop();
@@ -368,7 +371,8 @@ $("start").onclick = () => {
   prepareFamilies();
   ask("Let’s get this bus rolling! Answer this question to start the bus. ");
 };
-$("next").onclick = () => {
+function goToNext() {
+  clearTimeout(autoAdvanceTimer);
   const good = $("next").dataset.good === "true";
   $("question").close();
   if ("speechSynthesis" in window) window.speechSynthesis.cancel();
@@ -395,7 +399,8 @@ $("next").onclick = () => {
       setTimeout(driveToNextStop, 500);
     }, 1500);
   } else ask();
-};
+}
+$("next").onclick = goToNext;
 $("restart").onclick = () => {
   busAudio.stop();
   $("ending").close();
