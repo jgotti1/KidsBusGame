@@ -50,7 +50,7 @@ Trip progression: `driveToNextStop()` handles both the next-pickup and school-ar
 
 ### Narration and pacing (`speak`, `read`, auto-advance)
 
-`speak(text, { rate, pitch, onEnd })` wraps `SpeechSynthesisUtterance`; `onEnd` fires on both `onend` and `onerror` so callers get a completion signal even if the utterance is cancelled. If sound is off or `speechSynthesis` is unavailable, `onEnd` fires synchronously instead of speaking.
+`speak(text, { rate, pitch, onEnd })` wraps `SpeechSynthesisUtterance`; `onEnd` fires on both `onend` and `onerror` so callers get a completion signal even if the utterance is cancelled, but is deduplicated internally so it fires **at most once** per `speak()` call — some browsers fire both events for the same cancelled utterance, which previously could cascade through `readChoice()`'s recursion (each step calls `speechSynthesis.cancel()`, which could double-trigger the next step) and flood the speech engine. If sound is off or `speechSynthesis` is unavailable, `onEnd` fires synchronously instead of speaking.
 
 `read()`/`readChoice()` speak the question prompt first, then each answer choice **in the order the buttons actually appear on screen** (not `current.choices`' unshuffled order), chaining one `speak()` call per choice via `onEnd`. Each choice gets a `.read-highlight` CSS class (a simulated hover) while it's being read. The chain checks `locked` and that `current` hasn't changed before each step, so answering mid-read or a new question loading cleanly aborts it and clears the highlight.
 

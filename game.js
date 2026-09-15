@@ -87,8 +87,18 @@ function speak(text, { rate = 0.85, pitch = 1, onEnd } = {}) {
   utter.rate = rate;
   utter.pitch = pitch;
   if (onEnd) {
-    utter.onend = onEnd;
-    utter.onerror = onEnd;
+    // Some browsers fire both "end" and "error" for the same cancelled
+    // utterance; without this guard that double-fire cascades through
+    // readChoice()'s recursion (each step cancels+respeaks), flooding the
+    // speech engine.
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      onEnd();
+    };
+    utter.onend = finish;
+    utter.onerror = finish;
   }
   window.speechSynthesis.speak(utter);
 }
