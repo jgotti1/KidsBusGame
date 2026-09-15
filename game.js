@@ -68,8 +68,11 @@ function route() {
     ).join("") +
     '<span class="route-school">🏫</span>';
 }
-function speak(text, { rate = 0.85, pitch = 1 } = {}) {
-  if (!sound || !("speechSynthesis" in window)) return;
+function speak(text, { rate = 0.85, pitch = 1, onEnd } = {}) {
+  if (!sound || !("speechSynthesis" in window)) {
+    if (onEnd) onEnd();
+    return;
+  }
   window.speechSynthesis.cancel();
   const utter = new SpeechSynthesisUtterance(text);
   const voices = window.speechSynthesis.getVoices();
@@ -83,6 +86,10 @@ function speak(text, { rate = 0.85, pitch = 1 } = {}) {
   utter.lang = "en-US";
   utter.rate = rate;
   utter.pitch = pitch;
+  if (onEnd) {
+    utter.onend = onEnd;
+    utter.onerror = onEnd;
+  }
   window.speechSynthesis.speak(utter);
 }
 function read(introduction = "") {
@@ -134,7 +141,6 @@ function answer(choice, button) {
     setTimeout(returnChildrenHome, 2500);
     return;
   }
-  speak($("feedback").textContent);
   $("next").textContent =
     correct === 10
       ? "To school! →"
@@ -145,12 +151,28 @@ function answer(choice, button) {
             ? "Start the bus! →"
             : "Hop aboard! →"
           : "Try a new question →";
-  $("next").hidden = false;
   $("next").dataset.good = String(good);
-  $("next").focus();
   route();
   clearTimeout(autoAdvanceTimer);
-  if (good) autoAdvanceTimer = setTimeout(goToNext, 2500);
+  if (good) {
+    // No button needed on a correct answer: continue on its own a couple
+    // of seconds after the "hop aboard" praise finishes speaking. Speech
+    // "end" events are unreliable on iOS Safari, so a safety timer also
+    // guarantees the game keeps moving even if that event never fires.
+    $("next").hidden = true;
+    let advanced = false;
+    const proceed = () => {
+      if (advanced) return;
+      advanced = true;
+      autoAdvanceTimer = setTimeout(goToNext, 2000);
+    };
+    setTimeout(proceed, 4000);
+    speak($("feedback").textContent, { onEnd: proceed });
+  } else {
+    $("next").hidden = false;
+    $("next").focus();
+    speak($("feedback").textContent);
+  }
 }
 function finish() {
   busAudio.stop();
