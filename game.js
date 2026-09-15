@@ -92,9 +92,24 @@ function speak(text, { rate = 0.85, pitch = 1, onEnd } = {}) {
   }
   window.speechSynthesis.speak(utter);
 }
+// Reads choices in their on-screen order, highlighting each like a hover
+// while it's spoken. Guards against a stale question or a since-answered
+// question still finishing a chain of callbacks.
+function readChoice(question, buttons, index) {
+  buttons.forEach((b) => b.classList.remove("read-highlight"));
+  if (locked || current !== question || index >= buttons.length) return;
+  const button = buttons[index];
+  button.classList.add("read-highlight");
+  speak(button.textContent, {
+    onEnd: () => readChoice(question, buttons, index + 1),
+  });
+}
 function read(introduction = "") {
+  const question = current;
+  const buttons = [...$("choices").children];
   speak(
-    `${introduction}${current.prompt} ${/Letter|Number/.test(current.type) ? current.picture + ". " : ""} Your choices are: ${current.choices.join(", ")}.`,
+    `${introduction}${current.prompt} ${/Letter|Number/.test(current.type) ? current.picture + ". " : ""} Your choices are:`,
+    { onEnd: () => readChoice(question, buttons, 0) },
   );
 }
 function ask(introduction = "") {
@@ -124,6 +139,7 @@ function answer(choice, button) {
   button.classList.add(good ? "right" : "incorrect");
   [...$("choices").children].forEach((b) => {
     b.disabled = true;
+    b.classList.remove("read-highlight");
     if (b.textContent === current.correct) b.classList.add("right");
   });
   $("correct").textContent = correct;
