@@ -119,7 +119,6 @@ function ask(introduction = "") {
   $("picture").textContent = current.picture;
   $("prompt").textContent = current.prompt;
   $("feedback").textContent = "Take your time. You’ve got this!";
-  $("next").hidden = true;
   $("choices").replaceChildren();
   shuffle(current.choices).forEach((choice) => {
     const b = document.createElement("button");
@@ -148,47 +147,30 @@ function answer(choice, button) {
     ? startingBus
       ? "You did it! Let’s start the bus!"
       : "Wonderful! A new friend is hopping aboard."
-    : `Good try! The answer is ${current.correct}. Let’s keep learning.`;
+    : wrong === 2
+      ? `Good try! The answer is ${current.correct}. One more wrong question and school is canceled, careful!`
+      : `Good try! The answer is ${current.correct}. Let’s keep learning.`;
   if (wrong === 3) {
     $("feedback").textContent = "Sorry, try again. No school today.";
     speak($("feedback").textContent);
-    $("next").hidden = true;
     route();
     setTimeout(returnChildrenHome, 2500);
     return;
   }
-  $("next").textContent =
-    correct === 10
-      ? "To school! →"
-      : wrong === 3
-        ? "Finish ride →"
-        : good
-          ? startingBus
-            ? "Start the bus! →"
-            : "Hop aboard! →"
-          : "Try a new question →";
-  $("next").dataset.good = String(good);
   route();
+  // No button to continue: the game reads the feedback line (praise, or the
+  // answer plus a pause) then moves itself to the next question or stop.
+  // Speech "end" events are unreliable on iOS Safari, so a safety timer also
+  // guarantees the game keeps moving even if that event never fires.
   clearTimeout(autoAdvanceTimer);
-  if (good) {
-    // No button needed on a correct answer: continue on its own a couple
-    // of seconds after the "hop aboard" praise finishes speaking. Speech
-    // "end" events are unreliable on iOS Safari, so a safety timer also
-    // guarantees the game keeps moving even if that event never fires.
-    $("next").hidden = true;
-    let advanced = false;
-    const proceed = () => {
-      if (advanced) return;
-      advanced = true;
-      autoAdvanceTimer = setTimeout(goToNext, 2000);
-    };
-    setTimeout(proceed, 4000);
-    speak($("feedback").textContent, { onEnd: proceed });
-  } else {
-    $("next").hidden = false;
-    $("next").focus();
-    speak($("feedback").textContent);
-  }
+  let advanced = false;
+  const proceed = () => {
+    if (advanced) return;
+    advanced = true;
+    autoAdvanceTimer = setTimeout(() => goToNext(good), 2000);
+  };
+  setTimeout(proceed, 4000);
+  speak($("feedback").textContent, { onEnd: proceed });
 }
 function finish() {
   busAudio.stop();
@@ -409,9 +391,8 @@ $("start").onclick = () => {
   prepareFamilies();
   ask("Let’s get this bus rolling! Answer this question to start the bus. ");
 };
-function goToNext() {
+function goToNext(good) {
   clearTimeout(autoAdvanceTimer);
-  const good = $("next").dataset.good === "true";
   $("question").close();
   if ("speechSynthesis" in window) window.speechSynthesis.cancel();
   if (wrong === 3) {
@@ -438,7 +419,6 @@ function goToNext() {
     }, 1500);
   } else ask();
 }
-$("next").onclick = goToNext;
 $("restart").onclick = () => {
   busAudio.stop();
   $("ending").close();
