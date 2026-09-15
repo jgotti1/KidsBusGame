@@ -1,0 +1,1322 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap");
+:root {
+  font-family: "DM Sans", sans-serif;
+  color: #294e58;
+  background: #fcfaf3;
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  font: inherit;
+  cursor: pointer;
+  min-height: 52px;
+  border: 0;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 4px solid #277eae;
+  outline-offset: 5px;
+}
+[hidden] {
+  display: none !important;
+}
+.topbar {
+  max-width: 1280px;
+  margin: auto;
+  padding: 26px 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  color: #355b5b;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 2px;
+  display: grid;
+  grid-template-columns: 38px 1fr;
+}
+.brand > span {
+  grid-row: span 2;
+  font-size: 35px;
+  color: #e9ad42;
+  line-height: 1;
+}
+.brand small {
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.2px;
+  margin-top: 4px;
+}
+.sound {
+  border: 1px solid #dce2d8;
+  border-radius: 30px;
+  padding: 0 19px;
+  background: transparent;
+  color: #446465;
+  font-size: 15px;
+}
+main {
+  max-width: 1280px;
+  margin: auto;
+  padding: 0 42px;
+}
+.welcome {
+  min-height: 487px;
+  background: #e1f3f3;
+  border: 1px solid #d7ecea;
+  border-radius: 28px;
+  display: grid;
+  grid-template-columns: 1fr 1.18fr;
+  overflow: hidden;
+  position: relative;
+}
+.intro {
+  padding: 55px 0 42px 44px;
+  z-index: 1;
+}
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 800;
+  color: #62877b;
+}
+h1,
+h2,
+h3 {
+  font-family: "Fredoka", "Trebuchet MS", sans-serif;
+}
+h1 {
+  font-size: clamp(45px, 5.5vw, 73px);
+  line-height: 1.04;
+  letter-spacing: -2px;
+  margin: 21px 0 20px;
+  font-weight: 600;
+  color: #f6bd3f;
+  -webkit-text-stroke: 1.5px #395b6c;
+  text-shadow: 0 3px #395b6c;
+  position: relative;
+}
+h1 span {
+  color: #f8cc58;
+}
+h1 i {
+  position: absolute;
+  font-size: 35px;
+  color: #efb637;
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+  transform: rotate(15deg);
+  margin-left: 18px;
+  margin-top: 12px;
+}
+.intro p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #617a7a;
+  margin-bottom: 26px;
+}
+.primary {
+  background: #ffc94e;
+  color: #3f4e42;
+  padding: 14px 30px;
+  border-radius: 17px;
+  font-family: "Fredoka", sans-serif;
+  font-size: 23px;
+  font-weight: 500;
+  box-shadow: 0 5px 0 #dba632;
+  min-width: 195px;
+}
+.primary:hover {
+  background: #ffd970;
+  transform: translateY(-1px);
+}
+.primary span {
+  margin-left: 32px;
+}
+.hint {
+  font-size: 10px;
+  color: #758881;
+  margin-top: 25px;
+}
+.hint b {
+  padding: 0 7px;
+}
+.hero-art {
+  align-self: center;
+  margin-left: -35px;
+  margin-right: 0;
+  transform: translateY(16px);
+}
+.hero-art svg {
+  display: block;
+  width: 100%;
+  min-width: 360px;
+}
+.route-section {
+  padding: 34px 8px 30px;
+}
+.route-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.route-heading h2 {
+  font-size: 22px;
+  font-weight: 500;
+  margin: 8px 0 0;
+}
+.route-caption {
+  font-size: 12px;
+  color: #7a8b7c;
+}
+.route {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin: 24px 0 0;
+  gap: 8px;
+}
+.route:before {
+  content: "";
+  position: absolute;
+  border-top: 3px dashed #d8dec9;
+  left: 32px;
+  right: 30px;
+  top: 50%;
+  z-index: -1;
+}
+.route-stop {
+  background: #fcfaf3;
+  border: 2px solid #dce0cc;
+  width: 33px;
+  height: 33px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  color: #7c8b71;
+  font-weight: bold;
+}
+.route-stop.done {
+  background: #75b298;
+  border-color: #75b298;
+  color: white;
+}
+.route-bus,
+.route-school {
+  font-size: 36px;
+  background: #fcfaf3;
+  padding: 0 8px;
+}
+.features {
+  border-top: 1px solid #e7e8dc;
+  padding: 29px 8px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.features article {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.feature-icon {
+  display: grid;
+  place-items: center;
+  min-width: 48px;
+  height: 48px;
+  border-radius: 15px;
+  font-family: "Fredoka";
+  font-size: 25px;
+}
+.pink {
+  background: #f8e7df;
+  color: #c57f74;
+}
+.blue {
+  background: #e0edf3;
+  color: #6493ac;
+}
+.green {
+  background: #e6eedc;
+  color: #87a175;
+}
+.features h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 6px;
+}
+.features p {
+  font-size: 11px;
+  color: #7f8b80;
+  margin: 0;
+}
+footer {
+  text-align: center;
+  font-size: 10px;
+  color: #919a8a;
+  padding: 20px 0 28px;
+}
+footer span {
+  color: #d9ad43;
+  margin-left: 6px;
+}
+.ride-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
+.ride-heading h2 {
+  margin: 8px 0;
+  font-size: 28px;
+}
+.scores {
+  display: flex;
+  gap: 12px;
+}
+.scores > span {
+  background: #f0eddf;
+  border-radius: 16px;
+  padding: 15px;
+  font-size: 19px;
+}
+.cockpit {
+  height: 590px;
+  background: #e6b746;
+  border: 12px solid #f4cf69;
+  border-radius: 30px;
+  position: relative;
+  padding: 28px 155px 190px 18px;
+  overflow: hidden;
+}
+.windshield {
+  height: 100%;
+  border: 9px solid #3d626a;
+  background: #bfe7ee;
+  border-radius: 45px 45px 15px 15px;
+  position: relative;
+  overflow: hidden;
+}
+.hills {
+  position: absolute;
+  bottom: 0;
+  width: 130%;
+  height: 48%;
+  background: #9fcd94;
+  border-radius: 50% 60% 0 0;
+  left: -10%;
+}
+.street {
+  position: absolute;
+  bottom: 0;
+  height: 26px;
+  background: #dedbc5;
+  width: 100%;
+}
+.house {
+  position: absolute;
+  bottom: 17px;
+  left: 20%;
+  font-size: 105px;
+}
+.sun {
+  position: absolute;
+  right: 22%;
+  top: 14px;
+  border-radius: 50%;
+  background: #ffe599;
+  width: 45px;
+  height: 45px;
+}
+.cloud {
+  width: 90px;
+  height: 25px;
+  background: #fff;
+  border-radius: 50px;
+  position: absolute;
+  top: 30px;
+  left: 10%;
+  opacity: 0.85;
+}
+.c2 {
+  left: 60%;
+  top: 50px;
+  width: 70px;
+}
+.family {
+  position: absolute;
+  right: 17%;
+  bottom: 4px;
+  display: flex;
+  align-items: end;
+  transition:
+    transform 1.2s,
+    opacity 1.2s;
+}
+.family > span:first-child {
+  font-size: 84px;
+}
+.family > span:last-child {
+  font-size: 64px;
+  display: inline-block;
+  transform-origin: bottom center;
+  transition:
+    transform 1.2s,
+    opacity 1.2s;
+}
+.family.boarding > span:last-child {
+  animation: child-boards 1.2s ease-in-out forwards;
+}
+@keyframes child-boards {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  65% {
+    transform: translate(20px, -25px) scale(1.8);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(45px, 35px) scale(2);
+    opacity: 0;
+  }
+}
+.stop-sign {
+  position: absolute;
+  right: 5%;
+  bottom: 38px;
+  background: #ffde71;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 10px;
+  font-weight: bold;
+  border: 3px solid #536976;
+}
+.door {
+  position: absolute;
+  right: 12px;
+  top: 34px;
+  bottom: 198px;
+  width: 130px;
+  display: flex;
+  gap: 5px;
+  perspective: 300px;
+}
+.door div {
+  background: #a6dce1;
+  border: 5px solid #53696b;
+  width: 50%;
+  transition: transform 0.5s;
+  transform-origin: right;
+}
+.door.open div {
+  transform: rotateY(75deg);
+}
+.dashboard {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 190px;
+  background: #eab74b;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding: 0 26px;
+}
+.wheel {
+  border: 10px solid #405c61;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+  font-size: 60px;
+  line-height: 70px;
+  text-align: center;
+  color: #405c61;
+  transform: translateY(20px);
+}
+.dashboard-label {
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+.dashboard-label span {
+  display: block;
+  color: #66877b;
+  margin-top: 8px;
+}
+.mirror {
+  position: absolute;
+  top: 1px;
+  left: 44%;
+  background: #b9dcd6;
+  border: 6px solid #486367;
+  border-radius: 9px;
+  z-index: 2;
+  font-size: 20px;
+}
+#passengers {
+  font-size: 20px;
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  align-items: center;
+  text-align: center;
+}
+.passenger-head {
+  font-size: clamp(38px, 5vw, 64px);
+  line-height: 1.1;
+  padding: 4px 0;
+  background: #f6cf71;
+  border-radius: 18px;
+  border-bottom: 5px solid #ca9636;
+}
+#arrival {
+  position: absolute;
+  bottom: 0;
+  left: 40%;
+  font-size: 160px;
+}
+dialog {
+  border: 0;
+  border-radius: 27px;
+  padding: 28px;
+  width: min(520px, calc(100% - 28px));
+  background: #fffdf6;
+  color: #294e58;
+  text-align: center;
+  box-shadow: 0 24px 100px #233f5140;
+}
+dialog::backdrop {
+  background: #234f6570;
+  backdrop-filter: blur(5px);
+}
+.modal-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.listen {
+  background: #e4f1f3;
+  color: #39616d;
+  border-radius: 14px;
+  padding: 0 18px;
+}
+.picture {
+  font-size: 76px;
+  padding: 20px 0 5px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+dialog h2 {
+  font-size: 29px;
+  margin: 16px 0 23px;
+  font-weight: 500;
+}
+.choices {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+}
+.choices button {
+  font-family: "Fredoka", sans-serif;
+  font-size: 23px;
+  background: #e7eff9;
+  border: 3px solid transparent;
+  border-radius: 16px;
+  min-height: 72px;
+  overflow-wrap: anywhere;
+}
+.choices button:nth-child(2) {
+  background: #fbebc5;
+}
+.choices button:nth-child(3) {
+  background: #f7e0e6;
+}
+.choices button.right {
+  background: #d6edcb;
+  border-color: #70a65c;
+  color: #315b2b;
+}
+.choices button.incorrect {
+  border-color: #cb8484;
+}
+.choices button:disabled {
+  opacity: 1;
+  color: inherit;
+}
+#feedback {
+  min-height: 40px;
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 20px 0 8px;
+}
+#next {
+  margin: 8px 0 10px;
+}
+#ending {
+  overflow: hidden;
+  padding: 40px 30px;
+}
+#end-copy {
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+#confetti i {
+  position: absolute;
+  top: -20px;
+  left: var(--x);
+  width: 9px;
+  height: 17px;
+  background: var(--color);
+  animation: fall 3s var(--delay) infinite;
+  pointer-events: none;
+}
+@keyframes fall {
+  to {
+    transform: translateY(550px) rotate(400deg);
+  }
+}
+@media (min-width: 1450px) {
+  main {
+    padding-top: 20px;
+  }
+  .welcome {
+    min-height: 530px;
+  }
+  .intro {
+    padding-top: 65px;
+  }
+}
+@media (max-width: 800px) {
+  .topbar {
+    padding: 20px 22px;
+  }
+  main {
+    padding: 0 20px;
+  }
+  .intro {
+    padding: 35px 0 30px 26px;
+  }
+  h1 {
+    font-size: 49px;
+  }
+  .hero-art {
+    margin-left: -20px;
+    overflow: hidden;
+  }
+  .intro p {
+    font-size: 14px;
+  }
+  .hint {
+    max-width: 220px;
+    line-height: 1.7;
+  }
+  .route-caption {
+    display: none;
+  }
+  .features {
+    gap: 12px;
+  }
+  .features article {
+    gap: 9px;
+  }
+  .features p {
+    line-height: 1.6;
+  }
+  .route-stop {
+    width: 27px;
+    height: 27px;
+  }
+  .route {
+    gap: 3px;
+  }
+  .route-bus,
+  .route-school {
+    font-size: 29px;
+    padding: 0;
+  }
+  .welcome {
+    min-height: 420px;
+  }
+  .scores > span {
+    padding: 10px;
+    font-size: 16px;
+  }
+}
+@media (max-width: 580px) {
+  .brand {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+  .brand small {
+    font-size: 9px;
+  }
+  .sound {
+    padding: 0 13px;
+    font-size: 12px;
+  }
+  .welcome {
+    grid-template-columns: 1fr;
+  }
+  .intro {
+    text-align: center;
+    padding: 30px 18px 0;
+  }
+  h1 {
+    font-size: 56px;
+    margin: 17px 0;
+  }
+  .intro p {
+    margin: 16px 0;
+  }
+  .hint {
+    max-width: none;
+    margin: 19px 0 0;
+  }
+  .hero-art {
+    margin: -10px 0 -22px;
+    transform: none;
+  }
+  .hero-art svg {
+    min-width: 0;
+    max-height: 280px;
+  }
+  .route-heading h2 {
+    font-size: 19px;
+  }
+  .route-section {
+    padding: 25px 0;
+  }
+  .route-stop {
+    font-size: 10px;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+  }
+  .route-bus,
+  .route-school {
+    font-size: 23px;
+  }
+  .features {
+    grid-template-columns: 1fr;
+    padding: 22px 8px;
+    gap: 20px;
+  }
+  .feature-icon {
+    min-width: 86px;
+    height: 43px;
+  }
+  .features p {
+    font-size: 12px;
+  }
+  .ride-heading {
+    align-items: start;
+    gap: 8px;
+  }
+  .ride-heading h2 {
+    font-size: 22px;
+  }
+  .ride-heading .eyebrow {
+    font-size: 8px;
+  }
+  .scores {
+    gap: 5px;
+  }
+  .scores > span {
+    white-space: nowrap;
+    padding: 10px 6px;
+    font-size: 13px;
+  }
+  .cockpit {
+    height: 560px;
+    padding-bottom: 220px;
+    padding-right: 95px;
+    padding-left: 0;
+    border-width: 8px;
+  }
+  .door {
+    right: 0;
+    width: 86px;
+    bottom: 228px;
+  }
+  .house {
+    left: 5%;
+    font-size: 80px;
+  }
+  .family {
+    right: 20%;
+  }
+  .family > span:first-child {
+    font-size: 68px;
+  }
+  .family > span:last-child {
+    font-size: 52px;
+  }
+  .stop-sign {
+    right: 2%;
+    padding: 5px;
+  }
+  .dashboard {
+    height: 220px;
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    grid-template-rows: 55px 1fr;
+    gap: 8px;
+    padding: 8px;
+  }
+  .wheel {
+    width: 55px;
+    height: 55px;
+    border-width: 6px;
+    font-size: 35px;
+    line-height: 40px;
+    align-self: end;
+  }
+  .dashboard-label {
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+  #passengers {
+    grid-column: 1 / -1;
+    align-self: center;
+    gap: 6px;
+  }
+  .passenger-head {
+    font-size: clamp(32px, 9vw, 48px);
+  }
+  .choices button {
+    font-size: 20px;
+  }
+  dialog {
+    padding: 22px 18px;
+  }
+  .picture {
+    font-size: 62px;
+  }
+  dialog h2 {
+    font-size: 25px;
+  }
+}
+/* Scenery moves past the windows while the bus travels between stops. */
+.street::after {
+  content: "";
+  position: absolute;
+  inset: 11px 0;
+  background: repeating-linear-gradient(
+    to right,
+    #fff8df 0 40px,
+    transparent 40px 80px
+  );
+}
+.driving .street::after {
+  animation: road-passing 0.5s linear infinite;
+}
+.driving .house {
+  animation: scenery-passing 1.5s linear infinite;
+}
+.driving .cloud {
+  animation: clouds-passing 3s linear infinite;
+}
+.driving .c2 {
+  animation-delay: -1.5s;
+}
+.driving .stop-sign {
+  visibility: hidden;
+}
+.driving .dashboard {
+  animation: bus-rumble 0.4s ease-in-out infinite alternate;
+}
+.driving .wheel {
+  animation: gentle-steering 1s ease-in-out infinite alternate;
+}
+@keyframes road-passing {
+  to {
+    background-position: -80px 0;
+  }
+}
+@keyframes scenery-passing {
+  from {
+    left: 110%;
+  }
+  to {
+    left: -35%;
+  }
+}
+@keyframes clouds-passing {
+  from {
+    left: 110%;
+  }
+  to {
+    left: -25%;
+  }
+}
+@keyframes bus-rumble {
+  to {
+    transform: translateY(2px);
+  }
+}
+@keyframes gentle-steering {
+  from {
+    transform: translateY(20px) rotate(-6deg);
+  }
+  to {
+    transform: translateY(20px) rotate(6deg);
+  }
+}
+
+.exiting-child {
+  position: absolute;
+  right: 22px;
+  bottom: 195px;
+  z-index: 3;
+  font-size: 52px;
+  pointer-events: none;
+  animation: child-walks-home 1s ease-in-out forwards;
+}
+@keyframes child-walks-home {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(-140px, -55px) scale(0.6);
+    opacity: 0;
+  }
+}
+
+.outside-kids {
+  position: absolute;
+  bottom: 4px;
+  left: 5%;
+  right: 18%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+.outside-kids span {
+  display: inline-block;
+  font-size: clamp(25px, 4vw, 43px);
+}
+.outside-kids.cheering span {
+  animation: happy-cheer 0.55s ease-in-out infinite alternate;
+}
+@keyframes happy-cheer {
+  from {
+    transform: translateY(0) rotate(-8deg);
+  }
+  to {
+    transform: translateY(-17px) rotate(8deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *:before,
+  *:after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.creator-credit {
+  margin-top: 16px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #496968;
+}
+
+.creator-credit a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+/* Reference-inspired exterior bus: passengers, front hood, and real road wheels. */
+.ride-scene.cockpit {
+  height: clamp(480px, 52vw, 600px);
+  padding: 0;
+  border: 2px solid #d7ecea;
+  background: #e1f3f3;
+  isolation: isolate;
+}
+.ride-scene .route-scenery {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  border-radius: 0;
+}
+.ride-scene .hills {
+  height: 48%;
+}
+.ride-scene .house {
+  bottom: 180px;
+  left: 8%;
+}
+.ride-scene .street {
+  height: 90px;
+  background: #fae9b9;
+}
+.ride-scene .street::after {
+  top: 45px;
+  bottom: 40px;
+}
+.ride-scene .stop-sign {
+  bottom: 180px;
+  right: 3%;
+}
+.ride-scene #arrival {
+  bottom: 180px;
+  left: 38%;
+}
+.side-bus {
+  position: absolute;
+  left: 4%;
+  bottom: 115px;
+  width: 86%;
+  height: clamp(210px, 28vw, 330px);
+  container-type: inline-size;
+}
+.bus-body {
+  position: absolute;
+  inset: 0 14% 10% 0;
+  background: #ffda51;
+  border: 3px solid #ba8b2c;
+  border-radius: 40px 35px 8px 12px;
+}
+.bus-name {
+  position: absolute;
+  top: 5%;
+  left: 10%;
+  right: 15%;
+  text-align: center;
+  font-weight: 800;
+  font-size: clamp(12px, 2.3cqw, 22px);
+  letter-spacing: 0.22em;
+  color: #665621;
+}
+.ride-scene #passengers {
+  position: absolute;
+  inset: 21% 24% 21% 5%;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+  align-self: auto;
+  background: #ffe47b;
+  padding: 4px;
+  border-radius: 10px;
+}
+.ride-scene .passenger-head {
+  font-size: clamp(23px, 5.5cqw, 55px);
+  line-height: 1;
+  border: 0;
+  border-radius: 2px;
+  padding: 0;
+  background: #bee8ec;
+  height: 100%;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  overflow: hidden;
+}
+.bus-stripes {
+  position: absolute;
+  bottom: 6%;
+  left: 4%;
+  right: 23%;
+  height: 10%;
+  border-top: 5px solid #d5a02d;
+  border-bottom: 5px solid #d5a02d;
+}
+.bus-hood {
+  position: absolute;
+  right: 0;
+  bottom: 10%;
+  width: 20%;
+  height: 42%;
+  background: #ffce42;
+  border: 3px solid #ba8b2c;
+  border-radius: 8px 28px 12px 0;
+}
+.headlight {
+  position: absolute;
+  right: 5%;
+  top: 45%;
+  width: 25%;
+  height: 19%;
+  border-radius: 6px;
+  background: #fff5b1;
+}
+.bus-smile {
+  position: absolute;
+  right: 6%;
+  bottom: 9%;
+  width: 33%;
+  height: 20%;
+  border-bottom: 3px solid #97711d;
+  border-radius: 50%;
+}
+.ride-scene .door {
+  top: 20%;
+  bottom: 12%;
+  left: 67%;
+  right: auto;
+  width: 16%;
+  gap: 4px;
+}
+.ride-scene .door div {
+  border-width: 4px;
+}
+.bus-bumper {
+  position: absolute;
+  bottom: 8%;
+  left: -1%;
+  right: -1%;
+  height: 5%;
+  background: #3e5c65;
+  border-radius: 10px;
+}
+.road-wheel {
+  position: absolute;
+  bottom: -12%;
+  width: clamp(44px, 12%, 110px);
+  aspect-ratio: 1;
+  border: clamp(4px, 0.7cqw, 7px) solid #294956;
+  border-radius: 50%;
+  background: #405c66;
+  display: grid;
+  place-items: center;
+}
+.rear-wheel {
+  left: 10%;
+}
+.front-wheel {
+  right: 6%;
+}
+.wheel-hub {
+  width: 72%;
+  aspect-ratio: 1;
+  border: clamp(3px, 0.7cqw, 7px) solid #88a2a5;
+  border-radius: 50%;
+  background: conic-gradient(
+    #e0eae4 0deg 70deg,
+    #64818a 70deg 90deg,
+    #e0eae4 90deg 160deg,
+    #64818a 160deg 180deg,
+    #e0eae4 180deg 250deg,
+    #64818a 250deg 270deg,
+    #e0eae4 270deg 340deg,
+    #64818a 340deg 360deg
+  );
+}
+.driving .road-wheel {
+  animation: wheels-turn 0.65s linear infinite;
+}
+.driving .side-bus {
+  animation: bus-rumble 0.4s ease-in-out infinite alternate;
+}
+@keyframes wheels-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.ride-scene .family {
+  bottom: 38px;
+  right: 4%;
+  z-index: 3;
+}
+.ride-scene .family > span:first-child {
+  font-size: clamp(48px, 7vw, 78px);
+}
+.ride-scene .family > span:last-child {
+  font-size: clamp(40px, 6vw, 68px);
+}
+.ride-scene .family.boarding > span:last-child {
+  animation: board-exterior 1.2s ease-in-out forwards;
+}
+@keyframes board-exterior {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  65% {
+    transform: translate(-50px, -45px) scale(1.4);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-70px, -90px) scale(0.8);
+    opacity: 0;
+  }
+}
+.ride-scene .outside-kids {
+  bottom: 22px;
+  left: 7%;
+  right: 7%;
+  z-index: 4;
+}
+.ride-scene .exiting-child {
+  left: 71%;
+  right: auto;
+  bottom: 18%;
+  font-size: clamp(38px, 6cqw, 60px);
+  animation: exit-exterior 1s ease-in-out forwards;
+}
+@keyframes exit-exterior {
+  from {
+    transform: translateY(0) scale(0.8);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(90px) scale(1);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .driving .road-wheel,
+  .driving .side-bus,
+  .ride-scene .family.boarding > span:last-child,
+  .ride-scene .exiting-child {
+    animation: none;
+  }
+}
+
+/* Ending scenes: full-body children, with a school reveal after unloading. */
+.ride-scene #arrival {
+  width: min(72%, 490px);
+  left: 14%;
+  bottom: 115px;
+  font-size: initial;
+}
+#arrival svg {
+  display: block;
+  width: 100%;
+}
+.ride-scene .outside-kids {
+  gap: clamp(1px, 1vw, 10px);
+  align-items: end;
+}
+.ride-scene .outside-kids .full-child {
+  width: clamp(27px, 6.2vw, 66px);
+  font-size: initial;
+  flex-shrink: 0;
+  transform-origin: bottom center;
+}
+.full-child svg {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+.ride-scene .full-child.exiting-child {
+  width: clamp(40px, 6.2cqw, 66px);
+  font-size: initial;
+}
+.ride-scene .outside-kids.cheering .full-child {
+  animation: school-jump 0.55s ease-in-out infinite alternate;
+}
+.ride-scene .outside-kids.disappointed .full-child {
+  animation: sad-sway 1.5s ease-in-out infinite alternate;
+}
+@keyframes school-jump {
+  from {
+    transform: translateY(0) rotate(-4deg);
+  }
+  to {
+    transform: translateY(-28px) rotate(4deg);
+  }
+}
+@keyframes sad-sway {
+  from {
+    transform: rotate(-3deg);
+  }
+  to {
+    transform: rotate(3deg);
+  }
+}
+.departing .side-bus {
+  animation: bus-leaves-school 3s ease-in forwards;
+}
+.departing .road-wheel {
+  animation: wheels-turn 0.65s linear infinite;
+}
+.bus-departed .side-bus {
+  visibility: hidden;
+}
+@keyframes bus-leaves-school {
+  to {
+    transform: translateX(125%);
+  }
+}
+@media (max-width: 580px) {
+  .ride-scene #arrival {
+    width: 86%;
+    left: 7%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ride-scene .outside-kids.cheering .full-child,
+  .ride-scene .outside-kids.disappointed .full-child,
+  .departing .side-bus,
+  .departing .road-wheel {
+    animation: none;
+  }
+}
+
+.ride-scene .outside-kids.family-reunion {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px 2px;
+  bottom: 12px;
+}
+.family-pair {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+.ride-scene .family-pair .full-child {
+  width: clamp(23px, 4vw, 46px);
+}
+.ride-scene .family-pair .parent-figure {
+  width: clamp(31px, 5.4vw, 62px);
+  visibility: hidden;
+}
+.bus-departed .family-pair .parent-figure {
+  visibility: visible;
+}
+.disappointed .parent-figure .child-arms {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: parent-arm-raise 0.8s ease-in-out infinite alternate;
+}
+@keyframes parent-arm-raise {
+  from {
+    transform: translateY(5px) scaleY(0.7);
+  }
+  to {
+    transform: translateY(-3px) scaleY(1.1);
+  }
+}
+.choices button {
+  font-size: clamp(16px, 2.6vw, 23px);
+  padding: 10px 6px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .disappointed .parent-figure .child-arms {
+    animation: none;
+  }
+}

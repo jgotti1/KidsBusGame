@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#bceafa" />
+    <title>School Bus Adventure</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="index.html"
+        ><span>✿</span> LITTLE EXPLORERS
+        <small>Learning is an adventure</small></a
+      ><button id="sound" class="sound" aria-pressed="true">
+        ♫ <span>Sound on</span>
+      </button>
+    </header>
+    <main>
+      <section id="welcome" class="welcome">
+        <div class="intro">
+          <div class="eyebrow">A LITTLE LEARNING. A BIG ADVENTURE.</div>
+          <h1>School Bus<br /><span>Adventure</span><i>✦</i></h1>
+          <p>
+            Little stops. Big discoveries.<br />Let’s pick up our friends and
+            ride to school!
+          </p>
+          <button id="start" class="primary">Let’s go! <span>→</span></button>
+          <div class="hint">
+            ★ Ages 5–6 <b>•</b> Learn & play <b>•</b> Made for little explorers
+          </div>
+          <div class="creator-credit">
+            Created by MargottiCode @<a
+              href="https://margotticode.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              >margotticode.com</a
+            >
+          </div>
+        </div>
+        <div
+          id="hero-art"
+          class="hero-art"
+          aria-label="A happy yellow school bus on a sunny route"
+        ></div>
+      </section>
+      <section id="ride" hidden>
+        <div class="ride-heading">
+          <div>
+            <div class="eyebrow">ALL ABOARD, LITTLE EXPLORER!</div>
+            <h2 id="ride-title" aria-live="polite">
+              Let’s meet our first friend
+            </h2>
+          </div>
+          <div class="scores">
+            <span>⭐ <strong id="correct">0</strong> / 10</span
+            ><span>♡ <strong id="wrong">0</strong> / 3</span>
+          </div>
+        </div>
+        <div class="cockpit ride-scene">
+          <div class="windshield route-scenery">
+            <div class="sun"></div>
+            <div class="cloud c1"></div>
+            <div class="cloud c2"></div>
+            <div class="hills"></div>
+            <div id="stop-house" class="house">🏡</div>
+            <div class="street"></div>
+            <div class="stop-sign">BUS<br />STOP</div>
+            <div id="arrival" hidden aria-label="Our school">
+              <svg
+                viewBox="0 0 420 290"
+                role="img"
+                aria-label="A welcoming school building"
+              >
+                <path
+                  d="M20 120h380v155H20z"
+                  fill="#f3bd76"
+                  stroke="#bb8050"
+                  stroke-width="4"
+                />
+                <path d="M0 125L65 65h290l65 60z" fill="#c46d59" />
+                <path
+                  d="M140 65h140v210H140z"
+                  fill="#ffe2a1"
+                  stroke="#bb8050"
+                  stroke-width="4"
+                />
+                <path d="M125 70l85-65 85 65z" fill="#b85e50" />
+                <circle
+                  cx="210"
+                  cy="73"
+                  r="21"
+                  fill="#fffdf2"
+                  stroke="#54717b"
+                  stroke-width="4"
+                />
+                <path
+                  d="M210 58v15l10 5"
+                  fill="none"
+                  stroke="#54717b"
+                  stroke-width="3"
+                />
+                <text
+                  x="210"
+                  y="131"
+                  text-anchor="middle"
+                  font-family="sans-serif"
+                  font-size="23"
+                  font-weight="bold"
+                  fill="#4e6060"
+                >
+                  SCHOOL
+                </text>
+                <g fill="#b6e2eb" stroke="#fff4d7" stroke-width="7">
+                  <path
+                    d="M45 153h60v42H45zM315 153h60v42h-60zM45 218h60v35H45zM315 218h60v35h-60z"
+                  />
+                </g>
+                <path
+                  d="M174 275v-98q36-35 72 0v98z"
+                  fill="#668f9c"
+                  stroke="#496a79"
+                  stroke-width="4"
+                />
+                <path d="M210 166v109" stroke="#496a79" stroke-width="4" />
+                <path d="M150 278h120" stroke="#d6c3a0" stroke-width="15" />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="side-bus"
+            aria-label="Yellow school bus with passenger windows and two wheels"
+          >
+            <div class="bus-hood">
+              <span class="headlight"></span><span class="bus-smile"></span>
+            </div>
+            <div class="bus-body">
+              <div class="bus-name">SCHOOL BUS</div>
+              <div id="passengers" aria-label="Friends on the bus"></div>
+              <div class="bus-stripes"></div>
+            </div>
+            <div id="door" class="door">
+              <div></div>
+              <div></div>
+            </div>
+            <div class="bus-bumper"></div>
+            <div class="road-wheel rear-wheel" aria-hidden="true">
+              <div class="wheel-hub"></div>
+            </div>
+            <div class="road-wheel front-wheel" aria-hidden="true">
+              <div class="wheel-hub"></div>
+            </div>
+          </div>
+          <div id="family" class="family">
+            <span id="mom">👩🏽</span><span id="child">🧒🏽</span>
+          </div>
+          <div
+            id="outside-kids"
+            class="outside-kids"
+            aria-label="Children safely outside the bus"
+          ></div>
+        </div>
+      </section>
+      <section class="route-section">
+        <div class="route-heading">
+          <div>
+            <span class="eyebrow">OUR HAPPY LITTLE ROUTE</span>
+            <h2 id="route-title">10 friends. One wonderful school day.</h2>
+          </div>
+          <span class="route-caption"
+            >Every answer is a little discovery 🌱</span
+          >
+        </div>
+        <div id="route" class="route" aria-label="Route progress"></div>
+      </section>
+      <div id="features" class="features">
+        <article>
+          <span class="feature-icon pink">Aa</span>
+          <div>
+            <h3>Play & discover</h3>
+            <p>Letters, numbers, animals & more</p>
+          </div>
+        </article>
+        <article>
+          <span class="feature-icon blue">♫</span>
+          <div>
+            <h3>Listen & learn</h3>
+            <p>Hear every question read aloud</p>
+          </div>
+        </article>
+        <article>
+          <span class="feature-icon green">♡</span>
+          <div>
+            <h3>A happy little journey</h3>
+            <p>Go at your pace. You’ve got this!</p>
+          </div>
+        </article>
+      </div>
+      <footer>
+        Made for curious minds and wonderful little journeys <span>✦</span>
+      </footer>
+    </main>
+    <dialog id="question">
+      <div class="modal-top">
+        <span id="category" class="eyebrow"></span
+        ><button id="listen" class="listen">♫ Listen</button>
+      </div>
+      <div id="picture" class="picture"></div>
+      <h2 id="prompt"></h2>
+      <div id="choices" class="choices"></div>
+      <p id="feedback" aria-live="polite">Take your time. You’ve got this!</p>
+      <button id="next" class="primary" hidden>Next stop →</button>
+    </dialog>
+    <dialog id="ending">
+      <div id="confetti"></div>
+      <div id="end-icon" class="picture"></div>
+      <h2 id="end-title"></h2>
+      <p id="end-copy"></p>
+      <button id="restart" class="primary">Let’s ride again ↻</button>
+    </dialog>
+    <script src="questions.js"></script>
+    <script src="audio.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>
