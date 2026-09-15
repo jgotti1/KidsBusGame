@@ -925,16 +925,6 @@ dialog h2 {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *:before,
-  *:after {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
-}
-
 .creator-credit {
   margin-top: 16px;
   font-size: 12px;
@@ -1187,15 +1177,6 @@ dialog h2 {
     opacity: 0;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .driving .road-wheel,
-  .driving .side-bus,
-  .ride-scene .family.boarding > span:last-child,
-  .ride-scene .exiting-child {
-    animation: none;
-  }
-}
-
 /* Ending scenes: full-body children, with a school reveal after unloading. */
 .ride-scene #arrival {
   width: min(72%, 490px);
@@ -1268,14 +1249,6 @@ dialog h2 {
     left: 7%;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .ride-scene .outside-kids.cheering .full-child,
-  .ride-scene .outside-kids.disappointed .full-child,
-  .departing .side-bus,
-  .departing .road-wheel {
-    animation: none;
-  }
-}
 
 .ride-scene .outside-kids.family-reunion {
   display: grid;
@@ -1314,9 +1287,4 @@ dialog h2 {
 .choices button {
   font-size: clamp(16px, 2.6vw, 23px);
   padding: 10px 6px;
-}
-@media (prefers-reduced-motion: reduce) {
-  .disappointed .parent-figure .child-arms {
-    animation: none;
-  }
 }
