@@ -70,21 +70,76 @@ function route() {
     ).join("") +
     '<span class="route-school">🏫</span>';
 }
-function speak(text, { rate = 0.85, pitch = 1, onEnd } = {}) {
+// getVoices() can return an empty list the first time it's called (voices
+// load asynchronously in Chrome), which would silently fall back to a
+// robotic default voice for the very first thing spoken. Caching the list
+// and refreshing it on "voiceschanged" avoids that.
+let cachedVoices = [];
+if ("speechSynthesis" in window) {
+  const refreshVoices = () => {
+    cachedVoices = window.speechSynthesis.getVoices();
+  };
+  refreshVoices();
+  window.speechSynthesis.onvoiceschanged = refreshVoices;
+}
+// Names of nicer-sounding built-in voices across common platforms/browsers
+// (macOS/iOS, Windows/Edge, Chrome/Android), preferred over whatever the
+// generic default voice for a language happens to be.
+const PREFERRED_VOICE_NAMES =
+  /Natural|Google US English|Google UK English Female|Samantha|Ava|Allison|Susan|Karen|Moira|Tessa|Aria|Jenny|Michelle|Zira/i;
+// The voice the player picked from the Voice dialog, or null to auto-pick
+// via PREFERRED_VOICE_NAMES. Remembered across visits (by voice name) in
+// localStorage — the only thing this game stores locally, and it's just an
+// anonymous voice-name string, not personal data.
+const VOICE_STORAGE_KEY = "schoolBusVoiceName";
+let preferredVoice = null;
+function saveVoiceName(name) {
+  try {
+    localStorage.setItem(VOICE_STORAGE_KEY, name);
+  } catch {
+    // Storage can be unavailable (private browsing, disabled cookies, etc.);
+    // the voice just won't be remembered next time.
+  }
+}
+function loadSavedVoiceName() {
+  try {
+    return localStorage.getItem(VOICE_STORAGE_KEY);
+  } catch {
+    return null;
+  }
+}
+function englishVoices() {
+  const voices = cachedVoices.length
+    ? cachedVoices
+    : window.speechSynthesis.getVoices();
+  const seen = new Set();
+  return voices.filter((v) => {
+    if (!v.lang.startsWith("en") || seen.has(v.name)) return false;
+    seen.add(v.name);
+    return true;
+  });
+}
+function pickVoice() {
+  if (preferredVoice) return preferredVoice;
+  const voices = englishVoices();
+  const savedName = loadSavedVoiceName();
+  const saved = savedName && voices.find((v) => v.name === savedName);
+  if (saved) {
+    preferredVoice = saved;
+    return saved;
+  }
+  return (
+    voices.find((v) => PREFERRED_VOICE_NAMES.test(v.name)) || voices[0] || null
+  );
+}
+function speak(text, { rate = 0.85, pitch = 1, onEnd, voice } = {}) {
   if (!sound || !("speechSynthesis" in window)) {
     if (onEnd) onEnd();
     return;
   }
   window.speechSynthesis.cancel();
   const utter = new SpeechSynthesisUtterance(text);
-  const voices = window.speechSynthesis.getVoices();
-  utter.voice =
-    voices.find(
-      (v) =>
-        v.lang.startsWith("en") && /Samantha|Karen|Susan|Zira/i.test(v.name),
-    ) ||
-    voices.find((v) => v.lang.startsWith("en")) ||
-    null;
+  utter.voice = voice || pickVoice();
   utter.lang = "en-US";
   utter.rate = rate;
   utter.pitch = pitch;
@@ -398,6 +453,47 @@ function driveToNextStop() {
     setTimeout(ask, 700);
   }, DRIVE_DURATION);
 }
+
+const VOICE_SAMPLE_TEXT = "Hi there! I can’t wait for our bus ride today.";
+// Builds one button per available English voice; hovering (or keyboard-
+// focusing, for accessibility) previews it, clicking selects it for the
+// rest of this session and closes the dialog.
+function populateVoiceList() {
+  const list = $("voice-list");
+  list.replaceChildren();
+  const voices = englishVoices();
+  if (!voices.length) {
+    const p = document.createElement("p");
+    p.textContent =
+      "No voices are available on this device yet. Try again in a moment.";
+    list.append(p);
+    return;
+  }
+  const active = pickVoice();
+  voices.forEach((voice) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = voice.name;
+    if (voice === active) b.classList.add("selected");
+    const preview = () => speak(VOICE_SAMPLE_TEXT, { voice });
+    b.addEventListener("mouseenter", preview);
+    b.addEventListener("focus", preview);
+    b.onclick = () => {
+      preferredVoice = voice;
+      saveVoiceName(voice.name);
+      $("voice-selection").close();
+      speak(VOICE_SAMPLE_TEXT, { voice });
+    };
+    list.append(b);
+  });
+}
+$("voice-picker").onclick = () => {
+  populateVoiceList();
+  $("voice-selection").showModal();
+};
+$("voice-selection").addEventListener("cancel", () => {
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+});
 
 // Reads the age-selection choices in on-screen order, highlighting each
 // like a hover, the same way readChoice() does for in-game questions.

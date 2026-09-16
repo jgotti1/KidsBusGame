@@ -12,9 +12,15 @@
       <a class="brand" href="index.html"
         ><span>✿</span> LITTLE EXPLORERS
         <small>Learning is an adventure</small></a
-      ><button id="sound" class="sound" aria-pressed="true">
-        ♫ <span>Sound on</span>
-      </button>
+      >
+      <div class="topbar-actions">
+        <button id="voice-picker" class="sound" type="button">
+          🗣️ <span>Voice</span>
+        </button>
+        <button id="sound" class="sound" aria-pressed="true">
+          ♫ <span>Sound on</span>
+        </button>
+      </div>
     </header>
     <main>
       <section id="welcome" class="welcome">
@@ -205,6 +211,18 @@
         Made for curious minds and wonderful little journeys <span>✦</span>
       </footer>
     </main>
+    <dialog
+      id="voice-selection"
+      aria-labelledby="voice-title"
+      aria-describedby="voice-copy"
+    >
+      <div class="picture" aria-hidden="true">🗣️</div>
+      <h2 id="voice-title">Choose a narration voice</h2>
+      <p id="voice-copy">
+        Hover over (or tap) a voice to hear a sample, then pick one.
+      </p>
+      <div id="voice-list" class="choices voice-choices"></div>
+    </dialog>
     <dialog
       id="age-selection"
       aria-labelledby="age-title"
