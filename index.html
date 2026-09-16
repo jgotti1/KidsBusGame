@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#bceafa" />
     <title>School Bus Adventure</title>
-    <link rel="stylesheet" href="style.css?v=2" />
+    <link rel="stylesheet" href="style.css?v=3" />
   </head>
   <body>
     <header class="topbar">
@@ -27,7 +27,7 @@
           </p>
           <button id="start" class="primary">Let’s go! <span>→</span></button>
           <div class="hint">
-            ★ Ages 5–6 <b>•</b> Learn & play <b>•</b> Made for little explorers
+            ★ Ages 5–9 <b>•</b> Learn & play <b>•</b> Made for little explorers
           </div>
           <div class="creator-credit">
             Created by MargottiCode @<a
@@ -205,6 +205,19 @@
         Made for curious minds and wonderful little journeys <span>✦</span>
       </footer>
     </main>
+    <dialog
+      id="age-selection"
+      aria-labelledby="age-title"
+      aria-describedby="age-copy"
+    >
+      <div class="picture" aria-hidden="true">🚌</div>
+      <h2 id="age-title">Choose your age group</h2>
+      <p id="age-copy">Which questions would you like for this ride?</p>
+      <div class="choices age-choices">
+        <button id="ages-5-6" type="button">Ages 5–6</button>
+        <button id="ages-7-9" type="button">Ages 7–9</button>
+      </div>
+    </dialog>
     <dialog id="question">
       <div class="modal-top">
         <span id="category" class="eyebrow"></span
@@ -222,8 +235,9 @@
       <p id="end-copy"></p>
       <button id="restart" class="primary">Let’s ride again ↻</button>
     </dialog>
-    <script src="questions.js"></script>
-    <script src="audio.js"></script>
-    <script src="game.js"></script>
+    <script src="questions-5-6.js?v=1"></script>
+    <script src="questions-7-9.js?v=1"></script>
+    <script src="audio.js?v=2"></script>
+    <script src="game.js?v=3"></script>
   </body>
 </html>

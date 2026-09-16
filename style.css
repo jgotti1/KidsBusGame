@@ -1304,3 +1304,7 @@ dialog h2 {
   font-size: clamp(16px, 2.6vw, 23px);
   padding: 10px 6px;
 }
+
+.age-choices {
+  grid-template-columns: repeat(2, 1fr);
+}

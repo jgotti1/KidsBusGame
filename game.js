@@ -5,6 +5,7 @@ let correct = 0,
   wrong = 0,
   current = null,
   deck = [],
+  ageGroup = null,
   locked = false,
   sound = true,
   startingBus = true,
@@ -21,7 +22,8 @@ const shuffle = (a) => {
 // Rotate categories instead of letting the larger letter banks dominate a ride.
 function buildQuestionDeck() {
   const groups = new Map();
-  QUESTIONS.forEach((question) => {
+  const questions = ageGroup === "5-6" ? QUESTIONS_5_6 : QUESTIONS_7_9;
+  questions.forEach((question) => {
     if (!groups.has(question.type)) groups.set(question.type, []);
     groups.get(question.type).push(question);
   });
@@ -397,12 +399,40 @@ function driveToNextStop() {
   }, DRIVE_DURATION);
 }
 
+// Reads the age-selection choices in on-screen order, highlighting each
+// like a hover, the same way readChoice() does for in-game questions.
+function readAgeChoice(buttons, index) {
+  buttons.forEach((b) => b.classList.remove("read-highlight"));
+  if (!$("age-selection").open || index >= buttons.length) return;
+  const button = buttons[index];
+  button.classList.add("read-highlight");
+  speak(button.textContent, {
+    onEnd: () => readAgeChoice(buttons, index + 1),
+  });
+}
 $("start").onclick = () => {
+  $("age-selection").showModal();
+  const buttons = [...document.querySelectorAll(".age-choices button")];
+  speak("Choose your age group. Your choices are:", {
+    onEnd: () => readAgeChoice(buttons, 0),
+  });
+};
+function startTrip(selectedAgeGroup) {
+  ageGroup = selectedAgeGroup;
+  document
+    .querySelectorAll(".age-choices button")
+    .forEach((b) => b.classList.remove("read-highlight"));
+  $("age-selection").close();
   busAudio.start(sound);
   deck = buildQuestionDeck();
   prepareFamilies();
   ask("Let’s get this bus rolling! Answer this question to start the bus. ");
-};
+}
+$("ages-5-6").onclick = () => startTrip("5-6");
+$("ages-7-9").onclick = () => startTrip("7-9");
+$("age-selection").addEventListener("cancel", () => {
+  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+});
 function goToNext(good) {
   clearTimeout(autoAdvanceTimer);
   $("question").close();
@@ -437,6 +467,9 @@ $("restart").onclick = () => {
   correct = 0;
   wrong = 0;
   startingBus = true;
+  ageGroup = null;
+  deck = [];
+  current = null;
   $("outside-kids").replaceChildren();
   $("outside-kids").classList.remove(
     "cheering",
