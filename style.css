@@ -1847,3 +1847,36 @@ dialog h2 {
     transform: translateY(-380px) scale(1.2);
   }
 }
+
+/* Level 2 opening: the room starts empty, then the class walks in. */
+.kid,
+.kid-bob {
+  transform-box: fill-box;
+}
+.students.empty .kid {
+  opacity: 0;
+}
+.students.walking-in .kid {
+  animation: student-walk-in 1.6s ease-out calc(var(--i) * 0.35s) both;
+}
+.students.walking-in .kid-bob {
+  animation: student-bob 0.32s ease-in-out calc(var(--i) * 0.35s) 5 alternate;
+}
+@keyframes student-walk-in {
+  from {
+    opacity: 0;
+    transform: translateX(calc(-100% * (var(--c) + 4)));
+  }
+  8% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes student-bob {
+  to {
+    transform: translateY(-6%);
+  }
+}

@@ -22,15 +22,19 @@ function makeStudentBack(index) {
   ];
   const desk = document.createElement("div");
   desk.className = "desk";
+  desk.style.setProperty("--i", index);
+  desk.style.setProperty("--c", index % 5);
   desk.innerHTML = `<span class="student-back" aria-hidden="true">
     <svg viewBox="0 0 60 70">
       <path d="M5 35h50l5 12H0Z" fill="#d7ab70"/><path d="M6 47v20M54 47v20" stroke="#756653" stroke-width="4"/><path d="M21 37h20l3 7H18Z" fill="#fffdf6"/>
+      <g class="kid"><g class="kid-bob">
       <path d="M14 40Q30 30 46 40L50 66H10Z" fill="${shirt}"/>
       <g stroke="${skin}" stroke-width="7" stroke-linecap="round">
         <path class="student-arm student-arm-left" d="M16 44L8 58"/><path class="student-arm student-arm-right" d="M44 44L52 58"/>
       </g>
       <circle cx="30" cy="24" r="16" fill="${skin}"/>
-      <path d="M14 29Q7 3 30 4Q53 3 46 29L42 35H18Z" fill="${hair}"/><rect x="13" y="54" width="34" height="12" rx="4" fill="#67848b"/>
+      <path d="M14 29Q7 3 30 4Q53 3 46 29L42 35H18Z" fill="${hair}"/>
+      </g></g><rect x="13" y="54" width="34" height="12" rx="4" fill="#67848b"/>
     </svg>
   </span>`;
   return desk;
@@ -53,6 +57,8 @@ let correct = 0,
   autoAdvanceTimer = null,
   mode = "bus", // "bus" (Part 1) | "classroom" (Level 2)
   classroomWritingTimer = null,
+  classroomStartTimer = null,
+  classroomOpening = false, // unscored "start the school day" question
   level2OfferTimer = null; // pending "Start Level 2?" prompt after a Part-1 win
 const shuffle = (a) => {
   a = [...a];
@@ -240,7 +246,11 @@ function read(introduction = "") {
 function ask(introduction = "") {
   locked = false;
   current = deck.pop();
-  $("category").textContent = startingBus ? "Start the bus" : current.type;
+  $("category").textContent = startingBus
+    ? "Start the bus"
+    : classroomOpening
+      ? "Start the school day"
+      : current.type;
   $("picture").textContent = current.picture;
   $("prompt").textContent = current.prompt;
   $("feedback").textContent = "Take your time. You’ve got this!";
@@ -283,8 +293,10 @@ function answer(choice, button) {
   if (locked) return;
   locked = true;
   const good = choice === current.correct;
-  if (!good) wrong++;
-  else if (!startingBus) correct++;
+  if (!good) {
+    // The opening classroom question never counts as a miss.
+    if (!classroomOpening) wrong++;
+  } else if (!startingBus && !classroomOpening) correct++;
   button.classList.add(good ? "right" : "incorrect");
   [...$("choices").children].forEach((b) => {
     b.disabled = true;
@@ -298,13 +310,15 @@ function answer(choice, button) {
   $("feedback").textContent = good
     ? startingBus
       ? "You did it! Let’s start the bus!"
-      : mode === "classroom"
-        ? correct === goal() - 1
-          ? "Great job! One more correct question and you win!"
-          : correct === goal()
-            ? "You did it! Ten correct answers! You win!"
-            : "Great job! On to the next question."
-        : "Wonderful! A new friend is hopping aboard."
+      : classroomOpening
+        ? "Wonderful! Here comes your class."
+        : mode === "classroom"
+          ? correct === goal() - 1
+            ? "Great job! One more correct question and you win!"
+            : correct === goal()
+              ? "You did it! Ten correct answers! You win!"
+              : "Great job! On to the next question."
+          : "Wonderful! A new friend is hopping aboard."
     : wrong === 2
       ? `Good try! The answer is ${current.correct}. One more wrong question and school is canceled, careful!`
       : `Good try! The answer is ${current.correct}. Let’s keep learning.`;
@@ -728,6 +742,10 @@ function startClassroom(selectedAgeGroup) {
   ageGroup = selectedAgeGroup;
   mode = "classroom";
   startingBus = false;
+  clearTimeout(classroomStartTimer);
+  classroomOpening = true;
+  $("students").classList.remove("walking-in");
+  $("students").classList.add("empty");
   $("classroom-confetti").replaceChildren();
   $("classroom-confetti").classList.remove("rising");
   $("students").classList.remove("encouraging");
@@ -735,6 +753,14 @@ function startClassroom(selectedAgeGroup) {
     .querySelectorAll(".age-choices button")
     .forEach((b) => b.classList.remove("read-highlight"));
   $("age-selection").close();
+  // Stop any age-prompt narration still speaking so it can't leak into the
+  // opening question's wait.
+  if (
+    "speechSynthesis" in window &&
+    (window.speechSynthesis.speaking || window.speechSynthesis.pending)
+  ) {
+    window.speechSynthesis.cancel();
+  }
   correct = 0;
   wrong = 0;
   current = null;
@@ -750,7 +776,7 @@ function startClassroom(selectedAgeGroup) {
   $("teacher").classList.remove("turned", "clapping", "nodding", "celebrating");
   $("students").classList.remove("waving");
   route();
-  ask();
+  ask("Let’s do a test question before the class arrives. ");
 }
 $("ages-5-6").onclick = () =>
   mode === "classroom" ? startClassroom("5-6") : startTrip("5-6");
@@ -764,9 +790,33 @@ $("age-selection").addEventListener("cancel", () => {
 // whiteboard to clap while students wave, then she turns back to draw before
 // the next question. Wrong (non-final) answers just retry immediately, same
 // as Part 1. Win/loss reactions are handled by classroomWin()/classroomLoss().
+// The empty room's opening question was answered: the class walks in and the
+// teacher starts the day, then the first scored question is written.
+function classroomStartDay() {
+  classroomOpening = false;
+  $("students").classList.remove("empty");
+  $("students").classList.add("walking-in");
+  $("teacher").classList.add("turned");
+  $("classroom-title").textContent = "Let’s get this school day started!";
+  speak("Let’s get this school day started!");
+  clearTimeout(classroomStartTimer);
+  classroomStartTimer = setTimeout(() => {
+    $("students").classList.remove("walking-in");
+    $("teacher").classList.remove("turned");
+    ask();
+  }, 5500);
+}
 function classroomAdvance(good) {
   if (!good) {
-    ask();
+    ask(
+      classroomOpening
+        ? "Let’s try another test question before the class arrives. "
+        : "",
+    );
+    return;
+  }
+  if (classroomOpening) {
+    classroomStartDay();
     return;
   }
   if (correct === LEVEL2_GOAL) {
@@ -901,6 +951,9 @@ function goToNext(good) {
 }
 function fullReset() {
   clearTimeout(classroomWritingTimer);
+  clearTimeout(classroomStartTimer);
+  classroomOpening = false;
+  $("students").classList.remove("empty", "walking-in");
   $("classroom").classList.remove("writing");
   $("board-picture").textContent = "";
   $("board-prompt").textContent = "";
