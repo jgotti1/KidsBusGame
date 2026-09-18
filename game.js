@@ -104,14 +104,24 @@ function prepareFamilies() {
 }
 
 function route() {
+  const classroom = mode === "classroom";
   $("route").innerHTML =
-    `<span class="route-bus">🚌</span>` +
+    `<span class="route-bus">${classroom ? "🏫" : "🚌"}</span>` +
     Array.from(
       { length: goal() },
       (_, i) =>
         `<span class="route-stop ${i < correct ? "done" : ""}" ${i === correct ? 'aria-current="step"' : ""}>${i < correct ? "✓" : i + 1}</span>`,
     ).join("") +
-    '<span class="route-school">🏫</span>';
+    `<span class="route-school">${classroom ? "🏆" : "🏫"}</span>`;
+  // Wrong-answer bar: three misses ends the level.
+  $("miss-route").innerHTML =
+    `<span class="route-bus">${classroom ? "📚" : "🚌"}</span>` +
+    Array.from(
+      { length: 3 },
+      (_, i) =>
+        `<span class="route-stop ${i < wrong ? "missed" : ""}">${i < wrong ? "✗" : i + 1}</span>`,
+    ).join("") +
+    `<span class="route-school">${classroom ? "🌙" : "🏠"}</span>`;
 }
 // getVoices() can return an empty list the first time it's called (voices
 // load asynchronously in Chrome), which would silently fall back to a
@@ -313,6 +323,7 @@ function answer(choice, button) {
         setTimeout(classroomLoss, 1200);
       };
       setTimeout(begin, 6000);
+      route();
       speak($("feedback").textContent, { onEnd: begin });
     } else {
       speak($("feedback").textContent);

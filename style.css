@@ -219,6 +219,17 @@ h1 i {
   border-color: #75b298;
   color: white;
 }
+.route-stop.missed {
+  background: #ee9a8f;
+  border-color: #ee9a8f;
+  color: white;
+}
+.miss-route {
+  margin-top: 12px;
+}
+.miss-route:before {
+  border-top-color: #f0d6d1;
+}
 .route-bus,
 .route-school {
   font-size: 36px;
