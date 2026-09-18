@@ -1269,6 +1269,206 @@ dialog h2 {
   }
 }
 
+/* Level 2 — classroom scene. Mirrors .cockpit/.ride-scene's structure and
+   sizing, with a teacher (drawing/clapping states toggled by .turned) and
+   simple back-of-head students at desks instead of a bus. */
+.classroom-scene {
+  height: clamp(480px, 52vw, 600px);
+  padding: 0;
+  border: 2px solid #d7ecea;
+  background: #fbf1da;
+  border-radius: 30px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.classroom-room {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+#classroom.entering .classroom-room {
+  animation: classroom-fade-in 900ms ease both;
+}
+@keyframes classroom-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.classroom-window {
+  position: absolute;
+  top: 6%;
+  right: 6%;
+  width: 20%;
+  height: 26%;
+  background: #bfe7ee;
+  border: 8px solid #c9a25a;
+  border-radius: 10px;
+}
+.whiteboard {
+  position: absolute;
+  top: 8%;
+  left: 6%;
+  width: 34%;
+  height: 30%;
+  background: #fdfdfd;
+  border: 10px solid #8b6a45;
+  border-radius: 6px;
+}
+.chalk-marks {
+  position: absolute;
+  inset: 12%;
+  background: repeating-linear-gradient(
+    100deg,
+    transparent 0 10px,
+    #b9c8d6 10px 12px
+  );
+  opacity: 0;
+  animation: chalk-draw 2.5s ease-in-out infinite;
+}
+.classroom-room:has(#teacher.turned) .chalk-marks {
+  animation: none;
+  opacity: 0;
+}
+@keyframes chalk-draw {
+  0%,
+  100% {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  50% {
+    opacity: 0.8;
+    clip-path: inset(0 0 0 0);
+  }
+}
+.teacher {
+  position: absolute;
+  bottom: 4%;
+  left: 6%;
+  width: clamp(70px, 13%, 130px);
+}
+.teacher-back,
+.teacher-front {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.3s ease;
+}
+.teacher-front {
+  opacity: 0;
+}
+#teacher.turned .teacher-back {
+  opacity: 0;
+}
+#teacher.turned .teacher-front {
+  opacity: 1;
+}
+.teacher-back svg,
+.teacher-front svg {
+  display: block;
+  width: 100%;
+}
+#teacher:not(.turned) .teacher-draw-arm {
+  transform-box: fill-box;
+  transform-origin: 80% 70%;
+  animation: teacher-draw-arm 1.2s ease-in-out infinite;
+}
+@keyframes teacher-draw-arm {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+}
+#teacher.clapping .teacher-clap-arms {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: teacher-clap 0.4s ease-in-out infinite;
+}
+@keyframes teacher-clap {
+  0%,
+  100% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(0.85);
+  }
+}
+.students {
+  position: absolute;
+  bottom: 6%;
+  right: 5%;
+  width: 56%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(6px, 1.6vw, 16px);
+}
+.desk {
+  position: relative;
+}
+.student-back {
+  display: block;
+}
+.student-back svg {
+  display: block;
+  width: 100%;
+}
+.students.waving .student-back {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  animation: student-wave 0.5s ease-in-out infinite alternate;
+}
+@keyframes student-wave {
+  from {
+    transform: rotate(-6deg);
+  }
+  to {
+    transform: rotate(6deg);
+  }
+}
+@media (max-width: 800px) {
+  .classroom-scene {
+    height: 560px;
+  }
+  .whiteboard {
+    width: 40%;
+    height: 26%;
+  }
+  .teacher {
+    width: clamp(56px, 15%, 90px);
+  }
+  .students {
+    width: 62%;
+    gap: 6px;
+  }
+}
+@media (max-width: 580px) {
+  .classroom-scene {
+    height: 480px;
+    border-width: 8px;
+  }
+  .classroom-window {
+    display: none;
+  }
+  .whiteboard {
+    width: 46%;
+    height: 22%;
+  }
+  .teacher {
+    width: clamp(48px, 16%, 74px);
+  }
+  .students {
+    right: 4%;
+    width: 68%;
+    gap: 4px;
+  }
+}
+
 .ride-scene .outside-kids.family-reunion {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1314,6 +1514,10 @@ dialog h2 {
   grid-template-columns: repeat(2, 1fr);
 }
 
+.choice-buttons {
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .voice-choices {
   grid-template-columns: 1fr;
   gap: 8px;
@@ -1331,4 +1535,304 @@ dialog h2 {
   background: #d6edcb;
   border-color: #70a65c;
   color: #315b2b;
+}
+
+/* View from the back of the classroom: front wall, aisle, two desk rows. */
+.classroom-room {
+  background: linear-gradient(#f7ead3 0 49%, #dfc29c 49% 51%, #cda982 51%);
+}
+.classroom-room::before {
+  content: "";
+  position: absolute;
+  inset: 51% 0 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0 55px,
+    #b48e6b 56px 58px
+  );
+  clip-path: polygon(38% 0, 62% 0, 82% 100%, 18% 100%);
+  opacity: 0.45;
+}
+.classroom-window {
+  top: 8%;
+  right: 3%;
+  width: 13%;
+  height: 24%;
+  background:
+    linear-gradient(90deg, transparent 47%, #fff6de 47% 53%, transparent 53%),
+    linear-gradient(transparent 47%, #fff6de 47% 53%, transparent 53%), #bfe7ee;
+}
+.whiteboard {
+  top: 5%;
+  left: 17%;
+  width: 65%;
+  height: 38%;
+  border: 7px solid #8b9c9f;
+  box-shadow:
+    0 8px 0 #64777d,
+    0 12px 22px #654d3820;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.board-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #79948d;
+}
+.board-picture {
+  font-size: clamp(22px, 4vw, 42px);
+  line-height: 1.15;
+  margin: 6px 0;
+  overflow-wrap: anywhere;
+}
+.board-prompt {
+  font-size: clamp(13px, 1.8vw, 21px);
+  line-height: 1.3;
+  margin: 0;
+  color: #365f68;
+}
+#classroom.writing .board-picture,
+#classroom.writing .board-prompt {
+  animation: board-write 2.3s linear both;
+}
+@keyframes board-write {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+.chalk-marks {
+  display: none;
+}
+.teacher {
+  left: 12%;
+  bottom: auto;
+  top: 19%;
+  width: clamp(78px, 15%, 132px);
+  aspect-ratio: 1 / 2;
+  z-index: 2;
+}
+.teacher-back,
+.teacher-front {
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+.teacher-front {
+  transform: scaleX(0.7);
+}
+#teacher.turned .teacher-front {
+  transform: scaleX(1);
+}
+#teacher.turned .teacher-back {
+  transform: scaleX(0.7);
+}
+#teacher:not(.turned) .teacher-draw-arm {
+  animation: none;
+}
+#classroom.writing .teacher-draw-arm {
+  animation: teacher-draw-arm 0.55s ease-in-out infinite;
+}
+.students {
+  left: 7%;
+  right: 7%;
+  bottom: 3%;
+  width: auto;
+  height: 43%;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: repeat(2, 1fr);
+  gap: 8px 5%;
+  align-items: end;
+  z-index: 3;
+}
+.desk {
+  width: 100%;
+  max-width: 125px;
+  margin: auto;
+}
+.desk:nth-child(-n + 5) {
+  width: 75%;
+}
+.student-back svg {
+  max-height: 130px;
+}
+@media (max-width: 580px) {
+  .classroom-scene {
+    height: 540px;
+    border-width: 2px;
+  }
+  .whiteboard {
+    left: 8%;
+    width: 84%;
+    height: 36%;
+    padding: 10px;
+  }
+  .teacher {
+    left: 5%;
+    top: 25%;
+    width: 80px;
+  }
+  .students {
+    left: 3%;
+    right: 3%;
+    height: 37%;
+    gap: 12px 1%;
+  }
+  .board-picture {
+    font-size: 27px;
+  }
+  .board-prompt {
+    font-size: 15px;
+  }
+}
+
+/* Students lift and wave their arms while staying seated. */
+.students.waving .student-back {
+  animation: none;
+}
+.student-arm {
+  transform-box: fill-box;
+}
+.student-arm-left {
+  transform-origin: top right;
+}
+.student-arm-right {
+  transform-origin: top left;
+}
+.students.waving .student-arm-left {
+  animation: student-arm-left 0.55s ease-in-out infinite alternate;
+}
+.students.waving .student-arm-right {
+  animation: student-arm-right 0.55s ease-in-out infinite alternate;
+}
+@keyframes student-arm-left {
+  from {
+    transform: rotate(95deg);
+  }
+  to {
+    transform: rotate(145deg);
+  }
+}
+@keyframes student-arm-right {
+  from {
+    transform: rotate(-95deg);
+  }
+  to {
+    transform: rotate(-145deg);
+  }
+}
+.teacher {
+  transition: left 0.8s ease-in-out;
+}
+#teacher.celebrating {
+  left: calc(50% - clamp(78px, 15%, 132px) / 2);
+  z-index: 4;
+}
+#teacher.celebrating .teacher-front svg {
+  animation: teacher-jump 0.65s ease-in-out infinite;
+}
+#teacher.celebrating .teacher-arm-left {
+  transform-box: fill-box;
+  transform-origin: bottom left;
+  animation: teacher-wave-left 0.45s ease-in-out infinite alternate;
+}
+#teacher.celebrating .teacher-arm-right {
+  transform-box: fill-box;
+  transform-origin: bottom right;
+  animation: teacher-wave-right 0.45s ease-in-out infinite alternate;
+}
+@keyframes teacher-wave-left {
+  from {
+    transform: rotate(-60deg);
+  }
+  to {
+    transform: rotate(-95deg);
+  }
+}
+@keyframes teacher-wave-right {
+  from {
+    transform: rotate(60deg);
+  }
+  to {
+    transform: rotate(95deg);
+  }
+}
+@keyframes teacher-jump {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  45% {
+    transform: translateY(-22px);
+  }
+}
+@media (max-width: 580px) {
+  #teacher.celebrating {
+    left: calc(50% - 40px);
+  }
+}
+
+/* Teacher nods her head while clapping after a Level 2 loss. */
+#teacher.nodding .teacher-front svg {
+  transform-origin: 50% 100%;
+  animation: teacher-nod 0.8s ease-in-out infinite;
+}
+@keyframes teacher-nod {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  50% {
+    transform: rotate(3deg) translateY(3%);
+  }
+}
+
+/* Level 2 loss: students clap along while hearts and stars rise. */
+.students.encouraging .student-arm-left {
+  animation: student-clap-left 0.4s ease-in-out infinite alternate;
+}
+.students.encouraging .student-arm-right {
+  animation: student-clap-right 0.4s ease-in-out infinite alternate;
+}
+@keyframes student-clap-left {
+  from {
+    transform: rotate(105deg);
+  }
+  to {
+    transform: rotate(165deg);
+  }
+}
+@keyframes student-clap-right {
+  from {
+    transform: rotate(-105deg);
+  }
+  to {
+    transform: rotate(-165deg);
+  }
+}
+.scene-confetti.rising b {
+  position: absolute;
+  bottom: 0;
+  left: var(--x);
+  font-size: clamp(18px, 3vw, 28px);
+  opacity: 0;
+  animation: rise 3.5s ease-out var(--delay) infinite;
+}
+@keyframes rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.8);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-380px) scale(1.2);
+  }
 }

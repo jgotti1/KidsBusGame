@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#bceafa" />
     <title>School Bus Adventure</title>
-    <link rel="stylesheet" href="style.css?v=3" />
+    <link rel="stylesheet" href="style.css?v=10" />
   </head>
   <body>
     <header class="topbar">
@@ -172,6 +172,45 @@
           ></div>
         </div>
       </section>
+      <section id="classroom" hidden>
+        <div class="ride-heading">
+          <div>
+            <div class="eyebrow">WELCOME TO LEVEL 2!</div>
+            <h2 id="classroom-title" aria-live="polite">
+              Let’s learn something new
+            </h2>
+          </div>
+          <div class="scores">
+            <span>⭐ <strong id="classroom-correct">0</strong> / 10</span
+            ><span>♡ <strong id="classroom-wrong">0</strong> / 3</span>
+          </div>
+        </div>
+        <div class="cockpit classroom-scene">
+          <div class="classroom-room">
+            <div class="classroom-window"></div>
+            <div id="whiteboard" class="whiteboard">
+              <span class="board-label">TODAY’S DISCOVERY</span>
+              <div id="board-picture" class="board-picture"></div>
+              <p id="board-prompt" class="board-prompt"></p>
+              <div class="chalk-marks" aria-hidden="true"></div>
+            </div>
+            <div id="teacher" class="teacher" aria-hidden="true">
+              <div class="teacher-back"></div>
+              <div class="teacher-front"></div>
+            </div>
+            <div
+              id="students"
+              class="students"
+              aria-label="Students at their desks"
+            ></div>
+            <div
+              id="classroom-confetti"
+              class="scene-confetti"
+              aria-hidden="true"
+            ></div>
+          </div>
+        </div>
+      </section>
       <section class="route-section">
         <div class="route-heading">
           <div>
@@ -236,6 +275,19 @@
         <button id="ages-7-9" type="button">Ages 7–9</button>
       </div>
     </dialog>
+    <dialog
+      id="choice-prompt"
+      aria-labelledby="choice-title"
+      aria-describedby="choice-copy"
+    >
+      <div class="picture" aria-hidden="true" id="choice-icon"></div>
+      <h2 id="choice-title"></h2>
+      <p id="choice-copy"></p>
+      <div class="choices choice-buttons">
+        <button id="choice-a" type="button"></button>
+        <button id="choice-b" type="button"></button>
+      </div>
+    </dialog>
     <dialog id="question">
       <div class="modal-top">
         <span id="category" class="eyebrow"></span
@@ -255,7 +307,7 @@
     </dialog>
     <script src="questions-5-6.js?v=1"></script>
     <script src="questions-7-9.js?v=1"></script>
-    <script src="audio.js?v=2"></script>
-    <script src="game.js?v=3"></script>
+    <script src="audio.js?v=4"></script>
+    <script src="game.js?v=19"></script>
   </body>
 </html>
