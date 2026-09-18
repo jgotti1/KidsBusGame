@@ -108,6 +108,8 @@ These came from explicit product direction and should not be silently reverted:
 
 ## Deployment
 
+**Vercel (added):** the project is also deployed to Vercel as `kids-bus-game` (team `john-74e3`) using the CLI (`npx vercel@latest deploy --prod`; the folder is linked via the git-ignored `.vercel/`). `vercel.json` reproduces the `.htaccess` caching (HTML `no-store`, `.js`/`.css` one-year immutable, still safe only with bumped `?v=N` links). Vercel Deployment Protection is on by default, so the URL asks for a Vercel sign-in until it is disabled in the project's Settings. Connecting the GitHub repo in the Vercel dashboard would make pushes to `main` auto-deploy; that is not set up yet. The Bluehost notes below still apply if that host is used.
+
 The GitHub repo (`origin/main`) is **not** the live site and has no CI/auto-deploy configured. The played version is manually hosted on Bluehost at `https://busgame.margotticode.com`, independent of GitHub — pushing to `origin/main` only updates the repo. After any change, the edited files (`index.html`, `style.css`, `game.js`, `audio.js`, `questions-5-6.js`, `questions-7-9.js` as applicable) must also be re-uploaded to Bluehost via cPanel File Manager or FTP/SFTP, and any Bluehost/Cloudflare cache purged if the change doesn't appear.
 
 `index.html` links `style.css`, `questions-5-6.js`, `questions-7-9.js`, `audio.js`, and `game.js` each with their own cache-busting query string (e.g. `style.css?v=N`, `game.js?v=N`) so browsers/CDNs don't keep serving a stale file after a redeploy. Bump a file's own `N` whenever _that_ file changes and is redeployed — the other files' version numbers don't need to move too.
