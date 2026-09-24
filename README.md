@@ -1,6 +1,6 @@
 # KidsBusGame — School Bus Adventure
 
-A cheerful learning game for ages 5–9, created by **MargottiCode** — [margotticode.com](https://margotticode.com).
+A cheerful learning game for ages 5–9, created by **MargottiCode** — [margotticode.com](https://margotticode.com) — and designed together with my 5-year-old granddaughter, who directed the gameplay and rules as we went.
 
 ## Run
 
@@ -64,3 +64,46 @@ npx --yes prettier@3.6.2 --check index.html style.css questions-5-6.js questions
 Use `--write` instead of `--check` to format files. Prettier is only a development tool; it is not needed to play.
 
 Ad hoc Node checks have covered question validity, game progression, both endings, passenger identity, restart, and audio controls using browser mocks. These checks are not committed tests. Real browser rendering, iPad layout, and listening checks still need device verification.
+
+## Hosting
+
+The game is a static site, so any static host works. It is deployed on Vercel (project `kids-bus-game`) and served at `https://busgame.margotticode.com`, whose DNS record stays at Bluehost (an `A` record for `busgame` pointing to `76.76.21.21`). Deploy with `npx vercel@latest deploy --prod --scope john-74e3`. `vercel.json` sets the same cache headers as `.htaccess`.
+
+## Portfolio card
+
+The block below is machine-readable project info for a portfolio site (invisible on GitHub). Keep it in sync when the project, URL or tech changes. To build a card: read this JSON and use `title`, `tagline`/`description`, `thumbnail`, `tech`, and link to `liveUrl` and `repoUrl`.
+
+<!-- portfolio-card:start
+{
+  "title": "School Bus Adventure",
+  "category": "game",
+  "tagline": "A cheerful learning game where kids answer questions to pick up friends and ride the bus to school.",
+  "description": "A browser learning game for ages 5–9 with separate question banks for ages 5–6 and 7–9. Kids answer narrated questions to pick up ten children and reach school, and a Level 2 classroom round follows a win. Everything is read aloud, and the music and engine sounds are synthesized in the browser, with no accounts, tracking or backend.",
+  "liveUrl": "https://busgame.margotticode.com",
+  "repoUrl": "https://github.com/jgotti1/KidsBusGame",
+  "thumbnail": "https://raw.githubusercontent.com/jgotti1/KidsBusGame/main/docs/preview.jpg",
+  "tech": [
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "Web Audio API",
+    "Web Speech API",
+    "SVG",
+    "Vercel"
+  ],
+  "features": [
+    "Two age-based question banks with 315 questions each",
+    "Questions and answer choices read aloud with a voice picker",
+    "Animated bus ride with children who match their families",
+    "Level 2 classroom mode with a teacher and whiteboard",
+    "Music and engine sounds synthesized with Web Audio"
+  ],
+  "platforms": [
+    "desktop",
+    "tablet",
+    "mobile"
+  ],
+  "status": "live",
+  "origin": "Designed with my 5-year-old granddaughter, who directed the gameplay and rules as we built it"
+}
+portfolio-card:end -->
