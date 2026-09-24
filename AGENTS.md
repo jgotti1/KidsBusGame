@@ -30,6 +30,7 @@ There is no committed automated test suite. Any correctness checking has been ad
 
 - `index.html` — welcome screen, voice-selection dialog, age-selection dialog, bus interior, route, question dialog, ending dialog. Links `style.css`, `questions-5-6.js`, `questions-7-9.js`, `audio.js`, and `game.js` each with a cache-busting query string (see **Deployment**).
 - `.htaccess` — Bluehost/Apache cache headers: HTML is served with `Cache-Control: no-store` and `CDN-Cache-Control: no-store` (so the entry page and its `?v=N` links are not retained), while `.css`/`.js` get long-lived immutable caching, since a real content change always comes with a bumped `?v=N` in `index.html`, not the same URL going stale.
+- `favicon.svg` — the browser tab icon (a yellow school bus), linked from `index.html` as `favicon.svg?v=1`; bump its `?v=N` when the icon changes. Maintained with the user-level `browser-tab-icon` skill.
 - `style.css` — responsive layout, bus scenery, and all boarding/driving/unloading animation keyframes.
 - `game.js` — gameplay state machine, scoring, passenger tracking, speech-synthesis narration, and screen transitions. The welcome-screen bus SVG is embedded here as a template string.
 - `audio.js` — offline-synthesized background music and engine/road audio via the Web Audio API (no audio files); exposes a `busAudio` singleton. Must load before `game.js`.
